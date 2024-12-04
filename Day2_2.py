@@ -44,14 +44,19 @@ def check_safety(row):
 
 safe = 0
 for row in list1:
+    isSafe = False
     if check_safety(row):
         safe += 1
+        isSafe = True
         continue
     for i in range(0, len(row)):
         alternate = row.copy()
         del alternate[i]
         if check_safety(alternate):
             safe += 1
+            isSafe = True
             break
+    if not isSafe:
+        print(row)
 
 print(safe)
