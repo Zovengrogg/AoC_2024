@@ -17,7 +17,7 @@ def convert_index(a, b, length, direction):
             return [length - 1 - b, 2 * length - 2 - a - b]
     
 
-with open('files/day4_test.txt', 'r') as file:
+with open('files/day4.txt', 'r') as file:
     data = file.read()
 
 crossword = data.splitlines()
@@ -42,11 +42,13 @@ right_indexes = []
 for line in diagonal_r_crossword:
     mas_match = re.search(pattern, line)
     if mas_match:
-        right_indexes.append(convert_index(index, mas_match.start(), len(crossword), 'r'))
+        for m in re.finditer(pattern, line):
+            right_indexes.append(convert_index(index, m.start(), len(crossword), 'r'))
     
     sam_match = re.search(pattern2, line)
     if sam_match:
-        right_indexes.append(convert_index(index, sam_match.start(), len(crossword), 'r'))
+        for m in re.finditer(pattern2, line):
+            right_indexes.append(convert_index(index, m.start(), len(crossword), 'r'))
     index += 1
 
 index = 0
@@ -54,12 +56,20 @@ left_indexes = []
 for line in diagonal_l_crossword[::-1]:
     mas_match = re.search(pattern, line)
     if mas_match:
-        left_indexes.append(convert_index(index, mas_match.start(), len(crossword), 'l'))
+        for m in re.finditer(pattern, line):
+            left_indexes.append(convert_index(index, m.start(), len(crossword), 'l'))
     
     sam_match = re.search(pattern2, line)
     if sam_match:
-        left_indexes.append(convert_index(index, sam_match.start(), len(crossword), 'l'))
+        for m in re.finditer(pattern2, line):
+            left_indexes.append(convert_index(index, m.start(), len(crossword), 'l'))
     index += 1
+
+# right = [[0,3], [2,3], [4,3],
+#  [6,3], [1,9], [1,7], [3,7], [5,8], [6,8]]
+
+# left = [[6,8], [7,8], [3,9], [3,7], [5,7],
+#  [2,3], [4,3], [6,3], [8,3]]
 
 count = 0
 for r in right_indexes:
@@ -68,4 +78,6 @@ for r in right_indexes:
             count += 1
 
 print(count)
+
+
 
