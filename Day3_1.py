@@ -1,6 +1,6 @@
 import re
 
-with open('files/day3_1.txt', 'r') as file:
+with open('files/day3.txt', 'r') as file:
     content = file.read()
 
 pattern = r'mul\([0-9]{1,3},[0-9]{1,3}\)'
