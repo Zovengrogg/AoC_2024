@@ -30,8 +30,7 @@ def check_rules(update):
 sum = 0
 for update in updates:
     if check_rules(update):
-        middle_index = len(update) // 2
-        middle_value = update[middle_index]
+        middle_value = update[len(update) // 2]
         sum += int(middle_value)
 
 print(sum)

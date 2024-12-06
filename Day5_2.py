@@ -43,8 +43,7 @@ for update in updates:
     if not check_rules(update):
         new_update = fix_update(update)
 
-        middle_index = len(new_update) // 2
-        middle_value = new_update[middle_index]
+        middle_value = new_update[len(new_update) // 2]
         sum += int(middle_value)
 
 print(sum)
