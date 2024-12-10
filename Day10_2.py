@@ -53,7 +53,7 @@ class Hiker:
             self.walk_left(coordinate, self.level)
             self.walk_up(coordinate, self.level)
             self.walk_down(coordinate, self.level)
-        self.coordinates = list(set(map(tuple, self.new_coordinates)))
+        self.coordinates = self.new_coordinates
         self.new_coordinates = []
 
 
