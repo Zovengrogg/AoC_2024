@@ -1,4 +1,5 @@
 import time
+from collections import deque
 start_time = time.time()
 
 # files/day17_test.txt 117440
@@ -172,54 +173,58 @@ def run_forward():
 #         print(temp)
 #         break
 
+# Didn't work
+# As = deque([bin(x)[2:].zfill(3) for x in range(8)])
+# A_mem = deque([bin(x)[2:].zfill(3) for x in range(8)])
+# for i in range(len(instructions)):
+#     temp = []
+#     temp_mem = []
+#     suffix_index = -i * 3
+#     while len(As) > 0:
+#         a = As.pop()
+#         a_mem = A_mem.pop()
+#         last3 = int(a[-3:], 2)
+#         B = last3 ^ 1
+#         ogB = B
+#         if last3 == 0:
+#             C = ['100', '000']
+#         elif last3 == 1:
+#             C = ['001']
+#         elif last3 == 3:
+#             C = ['000', '010', '100', '110']
+#         else:
+#             C = [bin(x)[2:].zfill(3) for x in range(8)]
+#         B = B ^ 5
+#         c = bin(B ^ int(instructions[i]))[2:].zfill(3)
+#         if c in C:
+#             if len(a) > ogB:
+#                 if len(a) - 3 <= ogB:
+#                     if a[:len(a) - ogB - 1] == c[:len(a) - ogB - 1]:
+#                         newA = c + a[len(a) - ogB - 1:-3]
+#                         temp.append(newA)
+#                         temp_mem.append(newA+a_mem[suffix_index:])
+#                 elif a[len(a)-ogB-3:len(a)-ogB] == c:
+#                     temp.append(a[:-3])
+#                     temp_mem.append(a[:-3]+a_mem[suffix_index:])
+#             else:
+#                 if ogB > 3:
+#                     bin_format = f'0{ogB-3}b'
+#                     newA = [c + format(x, bin_format) for x in range(2**(ogB-3))]
+#                     for nA in newA:
+#                         suffix = a_mem[suffix_index:]
+#                         temp_mem.append(nA + suffix)
+#                         temp.append(nA)
+#                 else:
+#                     newA = format(int(c[:ogB], 2), '03b')
+#                     suffix = a_mem[suffix_index:]
+#                     temp.append(newA)
+#                     temp_mem.append(newA + suffix)
+#     As = temp
+#     A_mem = temp_mem
+    
+# A = min([int(x, 2) for x in A_mem])
+# print(A)
 
-As=[bin(x)[2:].zfill(3) for x in range(8)]
-A_mem = [bin(x)[2:].zfill(3) for x in range(8)]
-temp = []
-temp_mem = []
-for i in range(len(instructions)):
-    temp.clear()
-    temp_mem.clear()
-    while len(As) > 0:
-        a = As.pop()
-        a_mem = A_mem.pop()
-        A = int(a, 2)
-        B = A & 0b111
-        B = B ^ 1
-        ogB = B
-        if A & 0b111 == 0b000:
-            C = ['100', '000']
-        elif A & 0b111 == 0b001:
-            C = ['001']
-        elif A & 0b111 == 0b011:
-            C = ['000', '010', '100', '110']
-        else:
-            C = [bin(x)[2:].zfill(3) for x in range(8)]
-        B = B ^ 5
-        c = bin(B ^ int(instructions[i]))[2:].zfill(3)
-        if c in C:
-            if len(a) > ogB:
-                if len(a) - 3 <= ogB:
-                    if a[:len(a) - ogB - 1] == c[:len(a) - ogB - 1]:
-                        newA = c + a[len(a) - ogB - 1:-3]
-                        temp.append(newA)
-                        temp_mem.append(newA+a_mem[-i*3:])
-                elif a[len(a)-ogB-3:len(a)-ogB] == c:
-                    temp.append(a[:-3])
-                    temp_mem.append(a[:-3]+a_mem[-i*3:])
-            else:
-                if ogB > 3:
-                    newA = [c + bin(x)[2:].zfill(ogB-3) for x in range(2**(ogB-3))]
-                    for nA in newA:
-                        temp_mem.append(nA + a_mem[-i*3:])
-                        temp.append(nA)
-                else:
-                    newA = bin(int(c[:ogB],2))[2:].zfill(3)
-                    temp.append(newA)
-                    temp_mem.append(newA + a_mem[-i*3:])
-    if temp != []:
-        As = temp.copy()
-        A_mem = temp_mem.copy()
 
 print("Execution time: %s seconds" % (time.time() - start_time))
 
